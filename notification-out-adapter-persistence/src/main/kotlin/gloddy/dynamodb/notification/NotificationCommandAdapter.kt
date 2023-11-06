@@ -5,7 +5,7 @@ import gloddy.notification.port.out.NotificationCreatePort
 import org.springframework.stereotype.Component
 
 @Component
-class NotificationCommandAdaptor(
+class NotificationCommandAdapter(
     private val notificationRepository: NotificationRepository,
     private val notificationMapper: NotificationMapper
 ): NotificationCreatePort {
