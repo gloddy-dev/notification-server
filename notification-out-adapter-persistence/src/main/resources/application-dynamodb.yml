@@ -4,4 +4,4 @@ amazon:
   aws:
     accessKey: ${DYNAMODB_AWS_ACCESS_KEY}
     secretKey: ${DYNAMODB_AWS_SECRET_KEY}
-    region: ap-northeast-2
+    region: ${DYNAMODB_REGION}
