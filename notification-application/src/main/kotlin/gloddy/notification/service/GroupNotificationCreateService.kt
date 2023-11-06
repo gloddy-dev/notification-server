@@ -2,11 +2,10 @@ package gloddy.notification.service
 
 import gloddy.notification.*
 import gloddy.notification.dto.GroupEvent
-import gloddy.notification.dto.NotificationPushEvent
+import gloddy.notification.event.NotificationPushEvent
 import gloddy.notification.event.NotificationEventPublisher
 import gloddy.notification.port.`in`.GroupNotificationCreateUseCase
 import gloddy.notification.port.out.FCMTokenGetPort
-import gloddy.notification.port.out.GroupPayloadGetPort
 import gloddy.notification.port.out.NotificationCreatePort
 import gloddy.fcmToken.FirebaseToken
 import org.springframework.stereotype.Service

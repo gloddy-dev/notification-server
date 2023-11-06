@@ -1,7 +1,7 @@
 package gloddy.event
 
 import gloddy.NotificationPushService
-import gloddy.notification.dto.NotificationPushEvent
+import gloddy.notification.event.NotificationPushEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 

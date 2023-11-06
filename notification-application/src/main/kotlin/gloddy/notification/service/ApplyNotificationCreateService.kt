@@ -3,7 +3,7 @@ package gloddy.notification.service
 import gloddy.fcmToken.FirebaseToken
 import gloddy.notification.*
 import gloddy.notification.dto.ApplyEvent
-import gloddy.notification.dto.NotificationPushEvent
+import gloddy.notification.event.NotificationPushEvent
 import gloddy.notification.event.NotificationEventPublisher
 import gloddy.notification.port.`in`.ApplyNotificationCreateUseCase
 import gloddy.notification.port.out.FCMTokenGetPort

@@ -1,6 +1,6 @@
 package gloddy
 
-import gloddy.notification.dto.NotificationPushEvent
+import gloddy.notification.event.NotificationPushEvent
 import org.springframework.stereotype.Component
 
 @Component

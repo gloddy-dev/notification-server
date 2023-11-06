@@ -1,4 +1,4 @@
-package gloddy.notification.dto
+package gloddy.notification.event
 
 class NotificationPushEvent(
     val token: String,
