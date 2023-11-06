@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 extra["springCloudVersion"] = "2022.0.4"
 
 dependencies {
@@ -17,5 +19,13 @@ dependencies {
 dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+    }
+}
+
+tasks {
+    withType<Jar> { enabled = false }
+    withType<BootJar> {
+        enabled = true
+        mainClass.set("gloddy.NotificationApplicationKt")
     }
 }

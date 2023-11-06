@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
 	id("org.springframework.boot") version "3.1.5"
@@ -13,6 +14,11 @@ java {
 
 repositories {
 	mavenCentral()
+}
+
+tasks {
+	withType<Jar> { enabled = true }
+	withType<BootJar> { enabled = false }
 }
 
 subprojects {
