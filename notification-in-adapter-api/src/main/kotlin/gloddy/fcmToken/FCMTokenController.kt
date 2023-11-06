@@ -7,17 +7,17 @@ import gloddy.notification.UserId
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/v1/notification")
+@RequestMapping("/api/v1/notifications")
 class FCMTokenController(
     private val fcmTokenCreateUseCase: FCMTokenCreateUseCase
 ) {
     @PostMapping("/tokens")
     fun create(
         @RequestBody request: FCMTokenCreateRequest,
-        @RequestHeader("USER_ID") userId: Long
+        @RequestHeader("USER_ID") userId: UserId
     ) {
         fcmTokenCreateUseCase.create(FCMTokenCreateDto(
-            userId = UserId(userId),
+            userId = userId,
             token = FirebaseToken(request.token)
         ))
     }
