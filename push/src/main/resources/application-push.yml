@@ -1,0 +1,2 @@
+fcm:
+  certification-path: ${FCM_CERTIFICATION_PATH}
