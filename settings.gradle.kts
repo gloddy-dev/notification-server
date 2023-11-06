@@ -6,5 +6,6 @@ include(
     "notification-domain",
     "in-adapter-messaging",
     "notification-out-adapter-persistence",
-    "push"
+    "push",
+    "out-internal-api"
 )
