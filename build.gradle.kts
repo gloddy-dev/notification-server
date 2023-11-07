@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
 	id("org.springframework.boot") version "3.1.5"
@@ -15,6 +16,11 @@ repositories {
 	mavenCentral()
 }
 
+tasks {
+	withType<Jar> { enabled = true }
+	withType<BootJar> { enabled = false }
+}
+
 subprojects {
 
 	apply(plugin = "org.springframework.boot")
@@ -24,6 +30,7 @@ subprojects {
 
 	dependencies{
 		implementation("org.jetbrains.kotlin:kotlin-reflect")
+		implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	}
 
 	group = "gloddy"
