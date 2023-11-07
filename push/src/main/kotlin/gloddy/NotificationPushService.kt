@@ -20,8 +20,8 @@ class NotificationPushService(
             return
         }
 
-        fcmTokenQueryAdapter.get(event.userId)
-            .run { send(this.token, event) }
+        val fcmToken = fcmTokenQueryAdapter.get(event.userId)
+        send(fcmToken.token, event)
     }
 
     fun send(token: FirebaseToken, event: NotificationPushEvent) {
