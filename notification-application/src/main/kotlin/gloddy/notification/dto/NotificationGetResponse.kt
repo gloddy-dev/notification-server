@@ -1,7 +1,7 @@
 package gloddy.notification.dto
 
-import gloddy.notification.GroupId
 import gloddy.notification.Notification
+import gloddy.notification.NotificationType
 import gloddy.notification.UserId
 
 data class NotificationResponse(
@@ -10,8 +10,9 @@ data class NotificationResponse(
 
 data class NotificationDto(
     val userId: UserId,
-    val groupId: GroupId,
-    val content: String
+    val redirectId: Long,
+    val content: String,
+    val type: NotificationType
 )
 
 fun List<Notification>.toResponse(): NotificationResponse =
@@ -22,6 +23,7 @@ fun List<Notification>.toResponse(): NotificationResponse =
 fun Notification.toDto(): NotificationDto =
     NotificationDto(
         userId = this.userId,
-        groupId = this.groupId,
-        content = this.content
+        redirectId = this.redirectId,
+        content = this.content,
+        type = this.type
     )
