@@ -7,6 +7,8 @@ bootJar.enabled = false
 jar.enabled = true
 
 dependencies {
-    implementation(project(":push"))
-    //aws kafka 의존성
+    //aws sqs
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.0"))
+    implementation("io.awspring.cloud:spring-cloud-aws-starter-sqs")
 }
