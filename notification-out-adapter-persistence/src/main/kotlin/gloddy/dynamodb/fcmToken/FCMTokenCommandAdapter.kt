@@ -6,11 +6,10 @@ import org.springframework.stereotype.Component
 
 @Component
 class FCMTokenCommandAdapter(
-    private val fcmTokenRepository: FCMTokenRepository,
-    private val fcmTokenMapper: FCMTokenMapper
+    private val fcmTokenRepository: FCMTokenRepository
 ): FCMTokenCreatePort {
-    override fun create(fcmToken: FCMToken) {
-        val entity = fcmTokenMapper.toEntity(fcmToken)
-        fcmTokenRepository.save(entity)
+    override fun create(fcmToken: FCMToken): FCMToken {
+        val entity = fcmTokenRepository.save(fcmToken.toEntity())
+        return entity.toDomain()
     }
 }
