@@ -1,7 +1,11 @@
 package gloddy.notification.event
 
+import gloddy.notification.NotificationType
+import gloddy.notification.UserId
+
 class NotificationPushEvent(
-    val token: String,
+    val userId: UserId,
     val content: String,
-    val payload: Map<String, String>
+    val type: NotificationType,
+    val redirectId: Long
 )

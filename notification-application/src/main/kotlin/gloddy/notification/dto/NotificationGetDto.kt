@@ -2,6 +2,6 @@ package gloddy.notification.dto
 
 import gloddy.notification.UserId
 
-data class NotificationGetRequest(
+data class NotificationGetDto(
     val userId: UserId
 )
