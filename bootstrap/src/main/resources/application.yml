@@ -3,3 +3,4 @@ spring:
     import:
       - application-push.yml
       - application-dynamodb.yml
+      - application-message.yml
