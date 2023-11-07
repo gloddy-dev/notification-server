@@ -20,25 +20,22 @@ class NotificationPushService(
             return
         }
 
-        val fcmToken = fcmTokenQueryAdapter.get(event.userId)
-        send(fcmToken.token, event)
+        fcmTokenQueryAdapter.get(event.userId)
+            .run { send(this.token, event) }
     }
 
     fun send(token: FirebaseToken, event: NotificationPushEvent) {
-        pushClient.push(
-            PushCommand(
-                token = token.value,
-                title = NOTIFICATION_TITLE,
-                content = event.content,
-                payload = createPayload(event.redirectId, event.type)
-            )
-        )
+        PushCommand(
+            token = token.value,
+            title = NOTIFICATION_TITLE,
+            content = event.content,
+            payload = createPayload(event.redirectId, event.type)
+        ).run { pushClient.push(this) }
     }
 
-    private fun createPayload(redirectId: Long, type: NotificationType): Map<String, String> {
-        return buildMap {
+    private fun createPayload(redirectId: Long, type: NotificationType) =
+        buildMap {
             put("redirectId", redirectId.toString())
             put("type", type.name)
         }
-    }
 }
