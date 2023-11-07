@@ -1,7 +1,7 @@
 package gloddy.fcmToken
 
-import gloddy.fcmToken.dto.FCMTokenCreateRequest
 import gloddy.fcmToken.dto.FCMTokenCreateDto
+import gloddy.fcmToken.dto.FCMTokenCreateResponse
 import gloddy.fcmToken.port.`in`.FCMTokenCreateUseCase
 import gloddy.notification.UserId
 import org.springframework.web.bind.annotation.*
@@ -13,12 +13,9 @@ class FCMTokenController(
 ) {
     @PostMapping("/tokens")
     fun create(
-        @RequestBody request: FCMTokenCreateRequest,
+        @RequestBody request: FCMTokenCreateDto,
         @RequestHeader("USER_ID") userId: UserId
-    ) {
-        fcmTokenCreateUseCase.create(FCMTokenCreateDto(
-            userId = userId,
-            token = FirebaseToken(request.token)
-        ))
+    ): FCMTokenCreateResponse {
+        return fcmTokenCreateUseCase.create(userId, request)
     }
 }
