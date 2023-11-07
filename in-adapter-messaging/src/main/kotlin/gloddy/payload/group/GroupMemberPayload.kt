@@ -1,7 +1,7 @@
 package gloddy.payload.group
 
-data class GroupMemberEvent(
+data class GroupMemberPayload(
     val userId: Long,
     val groupId: Long,
-    val eventType: GroupMemberEventType
+    val eventType: GroupMemberPayloadType
 )

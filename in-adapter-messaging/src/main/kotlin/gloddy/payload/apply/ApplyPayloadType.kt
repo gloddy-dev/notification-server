@@ -1,6 +1,6 @@
 package gloddy.payload.apply
 
-enum class ApplyEventType(
+enum class ApplyPayloadType(
     val description: String
 ) {
     APPLY_CREATE("지원서가 생성 되었을 때"),

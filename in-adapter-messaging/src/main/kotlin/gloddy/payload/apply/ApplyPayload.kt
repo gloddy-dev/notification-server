@@ -1,8 +1,8 @@
 package gloddy.payload.apply
 
-data class ApplyEvent (
+data class ApplyPayload (
     val userId: Long,
     val groupId: Long,
     val applyId: Long,
-    val eventType: ApplyEventType
+    val eventType: ApplyPayloadType
 )
