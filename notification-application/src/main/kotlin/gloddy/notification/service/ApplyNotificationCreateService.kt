@@ -17,25 +17,22 @@ class ApplyNotificationCreateService(
     override fun create(applyEvent: ApplyEvent) {
         val type = NotificationType.of(applyEvent.eventType.name)
 
-        val notification = Notification(
+        Notification(
             redirectId = applyEvent.groupId,
             userId =  applyEvent.userId,
             content = type.content,
             type = type
-        )
+        ).run { notificationCreatePort.save(this) }
 
-        notificationCreatePort.save(notification)
         publishPushEvent(applyEvent.userId, type.content, applyEvent.groupId, type)
     }
 
     private fun publishPushEvent(userId: UserId, content: String, redirectId: Long, type: NotificationType) {
-        val event = NotificationPushEvent(
+        NotificationPushEvent(
             userId = userId,
             content = content,
             redirectId = redirectId,
             type = type
-        )
-
-        notificationEventPublisher.publishPushEvent(event)
+        ).run { notificationEventPublisher.publishPushEvent(this) }
     }
 }
