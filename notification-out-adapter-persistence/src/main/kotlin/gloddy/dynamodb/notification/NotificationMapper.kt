@@ -1,28 +1,21 @@
 package gloddy.dynamodb.notification
 
-import gloddy.notification.GroupId
 import gloddy.notification.Notification
 import gloddy.notification.UserId
-import org.springframework.stereotype.Component
 
-@Component
-class NotificationMapper {
 
-    fun toDomain(entity: NotificationEntity): Notification {
-        return Notification(
-            userId = UserId(entity.userId.toLong()),
-            groupId = GroupId(entity.groupId.toLong()),
-            content = entity.content,
-            type = entity.type!!
-        )
-    }
+fun NotificationEntity.toDomain(): Notification =
+    Notification(
+        userId = UserId(this.userId.toLong()),
+        redirectId = this.redirectId.toLong(),
+        content = this.content,
+        type = this.type!!
+    )
 
-    fun toEntity(domain: Notification): NotificationEntity {
-        return NotificationEntity(
-            userId = domain.userId.value.toString(),
-            groupId = domain.groupId.value.toString(),
-            content = domain.content,
-            type = domain.type
-        )
-    }
-}
+fun Notification.toEntity(): NotificationEntity =
+    NotificationEntity(
+        userId = this.userId.value.toString(),
+        redirectId = this.redirectId.toString(),
+        content = this.content,
+        type = this.type
+    )

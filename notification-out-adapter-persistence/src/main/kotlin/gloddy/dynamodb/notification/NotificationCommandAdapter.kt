@@ -7,9 +7,8 @@ import org.springframework.stereotype.Component
 @Component
 class NotificationCommandAdapter(
     private val notificationRepository: NotificationRepository,
-    private val notificationMapper: NotificationMapper
 ): NotificationCreatePort {
     override fun save(notification: Notification) {
-        notificationRepository.save(notificationMapper.toEntity(notification))
+        notificationRepository.save(notification.toEntity())
     }
 }

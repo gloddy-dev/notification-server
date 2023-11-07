@@ -8,12 +8,10 @@ import org.springframework.stereotype.Component
 @Component
 class NotificationQueryAdapter(
     private val notificationRepository: NotificationRepository,
-    private val notificationMapper: NotificationMapper
 ): NotificationGetPort {
 
     override fun findByUserId(userId: UserId): List<Notification> {
-        return notificationRepository.findByUserId(userId.value.toString())
-            .map{notificationMapper.toDomain(it)}
-            .toList()
+        val entities = notificationRepository.findByUserId(userId.value.toString())
+        return entities.map { it.toDomain() }.toList()
     }
 }

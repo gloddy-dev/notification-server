@@ -18,8 +18,8 @@ class NotificationEntity(
     @field:DynamoDBIndexHashKey(globalSecondaryIndexName = "user_id-created_at-index")
     var userId: String = "",
 
-    @field:DynamoDBAttribute(attributeName = "group_id")
-    var groupId: String = "",
+    @field:DynamoDBAttribute(attributeName = "redirect_id")
+    var redirectId: String = "",
 
     @field:DynamoDBAttribute(attributeName = "content")
     var content: String = "",
