@@ -18,13 +18,13 @@ class ApplyNotificationCreateService(
         val type = NotificationType.of(applyEvent.eventType.name)
 
         Notification(
-            redirectId = applyEvent.groupId,
-            userId =  applyEvent.userId,
+            redirectId = applyEvent.applyGroupId,
+            userId =  applyEvent.applyUserId,
             content = type.content,
             type = type
         ).run { notificationCreatePort.save(this) }
 
-        publishPushEvent(applyEvent.userId, type.content, applyEvent.groupId, type)
+        publishPushEvent(applyEvent.applyUserId, type.content, applyEvent.applyGroupId, type)
     }
 
     private fun publishPushEvent(userId: UserId, content: String, redirectId: Long, type: NotificationType) {
