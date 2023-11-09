@@ -5,6 +5,7 @@ import gloddy.notification.UserId
 
 data class ApplyEvent(
     val userId: UserId,
-    val groupId: Long,
+    val applyGroupId: Long,
+    val applyUserId: UserId,
     val eventType: ApplyEventType
 )
