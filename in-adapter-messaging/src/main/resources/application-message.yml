@@ -14,3 +14,5 @@ sqs:
   queue:
     apply: ${APPLY_SQS_QUEUE_NAME}
     group-member: ${GROUP_MEMBER_SQS_QUEUE_NAME}
+    group-article: ${GROUP_ARTICLE_SQS_QUEUE_NAME}
+    group-status: ${GROUP_STATUS_SQS_QUEUE_NAME}

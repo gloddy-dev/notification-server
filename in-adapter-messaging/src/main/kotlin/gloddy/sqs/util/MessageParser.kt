@@ -2,7 +2,9 @@ package gloddy.sqs.util
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import gloddy.payload.apply.ApplyPayload
+import gloddy.payload.group.GroupArticlePayload
 import gloddy.payload.group.GroupMemberPayload
+import gloddy.payload.group.GroupStatusPayload
 
 class MessageParser {
 
@@ -17,6 +19,16 @@ class MessageParser {
         fun parseGroupMemberEvent(message: String): GroupMemberPayload {
             val payload = parsePayloadFromMessage(message)
             return objectMapper.readValue(payload, GroupMemberPayload::class.java)
+        }
+
+        fun parseGroupArticleEvent(message: String): GroupArticlePayload {
+            val payload = parsePayloadFromMessage(message);
+            return objectMapper.readValue(payload, GroupArticlePayload::class.java)
+        }
+
+        fun parseGroupStatusEvent(message: String): GroupStatusPayload {
+            val payload = parsePayloadFromMessage(message);
+            return objectMapper.readValue(payload, GroupStatusPayload::class.java)
         }
 
         private fun parsePayloadFromMessage(message: String): String {
