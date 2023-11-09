@@ -25,11 +25,11 @@ class GroupNotificationCreateService(
         Notification(
             redirectId = groupEvent.groupId,
             userId =  groupEvent.userId,
-            content = notificationType.content,
+            content = notificationType.getContent("QA"),
             type = notificationType
         ).run { notificationCreatePort.save(this) }
 
-        publishPushEvent(groupEvent.userId, notificationType.content, groupEvent.groupId, notificationType)
+        publishPushEvent(groupEvent.userId, notificationType.getContent("QA"), groupEvent.groupId, notificationType)
     }
 
     override fun create(event: GroupStatusEvent) {
