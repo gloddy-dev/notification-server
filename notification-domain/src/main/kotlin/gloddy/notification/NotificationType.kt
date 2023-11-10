@@ -9,14 +9,8 @@ enum class NotificationType(
     APPLY_CREATE("새로운 모임 지원서가 도착했어요!", true),
     GROUP_LEAVE("님이 그룹에서 나갔어요", true),
     GROUP_ARTICLE_CREATE("새로운 게시글을 확인해주세요", true),
-    GROUP_APPROACHING_START("""
-        1시간 뒤 모임이 시작돼요!
-        준비는 되었나요?
-    """.trimIndent(), true),
-    GROUP_END("""
-        모임은 즐거우셨나요?
-        함께 했던 인원들을 평가해주세요!
-    """.trimIndent(), false)
+    GROUP_APPROACHING_START("1시간 뒤 모임이 시작돼요! 준비는 되었나요?", true),
+    GROUP_END("모임은 즐거우셨나요? 함께 했던 인원들을 평가해주세요!", false)
     ;
 
     companion object {

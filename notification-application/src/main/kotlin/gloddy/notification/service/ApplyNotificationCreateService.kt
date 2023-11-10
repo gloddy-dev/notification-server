@@ -1,6 +1,7 @@
 package gloddy.notification.service
 
 import gloddy.notification.*
+import gloddy.notification.NotificationType.APPLY_CREATE
 import gloddy.notification.dto.ApplyEvent
 import gloddy.notification.event.NotificationPushEvent
 import gloddy.notification.event.NotificationEventPublisher
@@ -19,7 +20,7 @@ class ApplyNotificationCreateService(
 
         Notification(
             redirectId = applyEvent.applyGroupId,
-            userId =  applyEvent.applyUserId,
+            userId =  getTargetUserId(type, applyEvent),
             content = type.content,
             type = type
         ).run { notificationCreatePort.save(this) }
@@ -34,5 +35,12 @@ class ApplyNotificationCreateService(
             redirectId = redirectId,
             type = type
         ).run { notificationEventPublisher.publishPushEvent(this) }
+    }
+
+    private fun getTargetUserId(type: NotificationType, applyEvent: ApplyEvent): UserId {
+        return when(type) {
+            in listOf(APPLY_CREATE) -> applyEvent.userId
+            else -> applyEvent.applyUserId
+        }
     }
 }
