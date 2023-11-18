@@ -12,7 +12,8 @@ class WebConfig : WebMvcConfigurer {
             .allowCredentials(true)
             .allowedOrigins(
                 "http://localhost:3000",
-                "https://gloddy.vercel.app"
+                "https://gloddy.vercel.app",
+                "https://gloddy-git-develop-gueit214.vercel.app"
             )
             .allowedMethods("*")
             .allowedHeaders("*")
