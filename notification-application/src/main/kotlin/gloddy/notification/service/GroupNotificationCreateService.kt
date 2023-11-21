@@ -55,7 +55,7 @@ class GroupNotificationCreateService(
         event.groupMemberUserIds.forEach {
             Notification(
                 userId = it,
-                redirectId = event.groupId,
+                redirectId = event.articleId,
                 content = notificationType.content,
                 type = notificationType
             ).run {
