@@ -2,6 +2,7 @@ package gloddy
 
 import gloddy.dynamodb.fcmToken.FCMTokenQueryAdapter
 import gloddy.fcmToken.FirebaseToken
+import gloddy.notification.Notification
 import gloddy.notification.NotificationType
 import gloddy.notification.event.NotificationPushEvent
 import org.springframework.stereotype.Component
@@ -16,20 +17,26 @@ class NotificationPushService(
     }
 
     fun push(event: NotificationPushEvent) {
-        if (!event.type.isNotificationRequired) {
+        val notification = event.notification
+
+        if (isNotPushRequired(notification)) {
             return
         }
 
-        val fcmToken = fcmTokenQueryAdapter.get(event.userId)
-        send(fcmToken.token, event)
+        val fcmToken = fcmTokenQueryAdapter.get(notification.userId)
+        send(fcmToken.token, notification)
     }
 
-    fun send(token: FirebaseToken, event: NotificationPushEvent) {
+    private fun isNotPushRequired(notification: Notification): Boolean {
+        return !notification.type.isNotificationRequired
+    }
+
+    private fun send(token: FirebaseToken, notification: Notification) {
         PushCommand(
             token = token.value,
             title = NOTIFICATION_TITLE,
-            content = event.content,
-            payload = createPayload(event.redirectId, event.type)
+            content = notification.content,
+            payload = createPayload(notification.redirectId, notification.type)
         ).run { pushClient.push(this) }
     }
 
