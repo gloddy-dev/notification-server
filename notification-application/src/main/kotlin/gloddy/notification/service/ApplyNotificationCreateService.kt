@@ -23,18 +23,10 @@ class ApplyNotificationCreateService(
             userId =  getTargetUserId(type, applyEvent),
             content = type.content,
             type = type
-        ).run { notificationCreatePort.save(this) }
-
-        publishPushEvent(applyEvent.applyUserId, type.content, applyEvent.applyGroupId, type)
-    }
-
-    private fun publishPushEvent(userId: UserId, content: String, redirectId: Long, type: NotificationType) {
-        NotificationPushEvent(
-            userId = userId,
-            content = content,
-            redirectId = redirectId,
-            type = type
-        ).run { notificationEventPublisher.publishPushEvent(this) }
+        ).run {
+            notificationCreatePort.save(this)
+            notificationEventPublisher.publishPushEvent(NotificationPushEvent(this))
+        }
     }
 
     private fun getTargetUserId(type: NotificationType, applyEvent: ApplyEvent): UserId {

@@ -27,49 +27,41 @@ class GroupNotificationCreateService(
             userId =  groupEvent.userId,
             content = notificationType.getContent("QA"),
             type = notificationType
-        ).run { notificationCreatePort.save(this) }
-
-        publishPushEvent(groupEvent.userId, notificationType.getContent("QA"), groupEvent.groupId, notificationType)
+        ).run {
+            notificationCreatePort.save(this)
+            notificationEventPublisher.publishPushEvent(NotificationPushEvent(this))
+        }
     }
 
     override fun create(event: GroupStatusEvent) {
         val notificationType = NotificationType.of(event.eventType.name)
 
-        event.groupMemberUserIds
-            .map { Notification(
+        event.groupMemberUserIds.forEach {
+            Notification(
                 userId = it,
                 redirectId = event.groupId,
                 content = notificationType.content,
                 type = notificationType
-            ) }
-            .forEach { notificationCreatePort.save(it) }
-
-        event.groupMemberUserIds
-            .forEach{ publishPushEvent(it, notificationType.content, event.groupId, notificationType) }
+            ).run {
+                notificationCreatePort.save(this)
+                notificationEventPublisher.publishPushEvent(NotificationPushEvent(this))
+            }
+        }
     }
 
     override fun create(event: GroupArticleEvent) {
         val notificationType = NotificationType.of(event.eventType.name)
 
-        event.groupMemberUserIds
-            .map { Notification(
+        event.groupMemberUserIds.forEach {
+            Notification(
                 userId = it,
                 redirectId = event.groupId,
                 content = notificationType.content,
                 type = notificationType
-            ) }
-            .forEach { notificationCreatePort.save(it) }
-
-        event.groupMemberUserIds
-            .forEach{ publishPushEvent(it, notificationType.content, event.groupId, notificationType) }
-    }
-
-    private fun publishPushEvent(userId: UserId, content: String, redirectId: Long, type: NotificationType) {
-        NotificationPushEvent(
-            userId = userId,
-            content = content,
-            redirectId = redirectId,
-            type = type
-        ).run { notificationEventPublisher.publishPushEvent(this) }
+            ).run {
+                notificationCreatePort.save(this)
+                notificationEventPublisher.publishPushEvent(NotificationPushEvent(this))
+            }
+        }
     }
 }
