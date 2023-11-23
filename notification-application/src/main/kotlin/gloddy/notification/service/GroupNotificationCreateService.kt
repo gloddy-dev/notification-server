@@ -25,7 +25,7 @@ class GroupNotificationCreateService(
         Notification(
             redirectId = groupEvent.groupId,
             userId =  groupEvent.userId,
-            content = notificationType.getContent("QA"),
+            content = notificationType.getContent(),
             type = notificationType
         ).run {
             notificationCreatePort.save(this)
