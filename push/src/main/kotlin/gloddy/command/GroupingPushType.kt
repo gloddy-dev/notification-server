@@ -3,8 +3,8 @@ package gloddy.command
 import gloddy.notification.NotificationType
 
 enum class GroupingPushType(
-    val title: String,
-    private val content: String,
+    private val title: String,
+    val content: String,
     val isRequiredPush: Boolean
 ) {
     APPLY_APPROVE("Your applied gathering has been approved! 👌",
@@ -38,10 +38,10 @@ enum class GroupingPushType(
         }
     }
 
-    fun getContent(name: String = "member"): String {
+    fun getTitle(name: String = "member"): String {
         return when(this) {
-            in listOf(GROUP_LEAVE) -> "'${name}' ${content}"
-            else -> content
+            in listOf(GROUP_LEAVE) -> "'${name}' ${title}"
+            else -> title
         }
     }
 }

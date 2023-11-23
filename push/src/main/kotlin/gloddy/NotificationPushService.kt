@@ -25,7 +25,7 @@ class NotificationPushService(
         when (pushCommand.isRequirePush) {
             true -> PushData(
                 token = fcmToken.value,
-                title = PUSH_TITLE,
+                title = pushCommand.title,
                 content = pushCommand.content,
                 payload = pushCommand.payload
             ).run { pushClient.push(this) }

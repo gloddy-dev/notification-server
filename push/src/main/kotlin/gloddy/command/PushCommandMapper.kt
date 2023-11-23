@@ -8,7 +8,8 @@ fun NotificationCreateEvent.toGroupingPushCommand(name: String = "member"): Push
 
     return GroupingPushCommand(
         userId = this.userId,
-        content = pushType.getContent(name),
+        title = pushType.getTitle(name),
+        content = pushType.content,
         payload = buildMap {
             put("redirectId", this@toGroupingPushCommand.redirectId.toString())
             put("type", pushType.name)
