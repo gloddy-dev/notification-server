@@ -4,8 +4,8 @@ import gloddy.notification.*
 import gloddy.notification.dto.GroupArticleEvent
 import gloddy.notification.dto.GroupEvent
 import gloddy.notification.dto.GroupStatusEvent
-import gloddy.notification.event.NotificationPushEvent
 import gloddy.notification.event.NotificationEventPublisher
+import gloddy.notification.event.toNotificationCreateEvent
 import gloddy.notification.port.`in`.GroupNotificationCreateUseCase
 import gloddy.notification.port.out.NotificationCreatePort
 import org.springframework.stereotype.Service
@@ -25,51 +25,43 @@ class GroupNotificationCreateService(
         Notification(
             redirectId = groupEvent.groupId,
             userId =  groupEvent.userId,
-            content = notificationType.getContent("QA"),
+            content = notificationType.getContent(),
             type = notificationType
-        ).run { notificationCreatePort.save(this) }
-
-        publishPushEvent(groupEvent.userId, notificationType.getContent("QA"), groupEvent.groupId, notificationType)
+        ).run {
+            notificationCreatePort.save(this)
+            notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
+        }
     }
 
     override fun create(event: GroupStatusEvent) {
         val notificationType = NotificationType.of(event.eventType.name)
 
-        event.groupMemberUserIds
-            .map { Notification(
+        event.groupMemberUserIds.forEach {
+            Notification(
                 userId = it,
                 redirectId = event.groupId,
                 content = notificationType.content,
                 type = notificationType
-            ) }
-            .forEach { notificationCreatePort.save(it) }
-
-        event.groupMemberUserIds
-            .forEach{ publishPushEvent(it, notificationType.content, event.groupId, notificationType) }
+            ).run {
+                notificationCreatePort.save(this)
+                notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
+            }
+        }
     }
 
     override fun create(event: GroupArticleEvent) {
         val notificationType = NotificationType.of(event.eventType.name)
 
-        event.groupMemberUserIds
-            .map { Notification(
+        event.groupMemberUserIds.forEach {
+            Notification(
                 userId = it,
                 redirectId = event.groupId,
                 content = notificationType.content,
                 type = notificationType
-            ) }
-            .forEach { notificationCreatePort.save(it) }
-
-        event.groupMemberUserIds
-            .forEach{ publishPushEvent(it, notificationType.content, event.groupId, notificationType) }
-    }
-
-    private fun publishPushEvent(userId: UserId, content: String, redirectId: Long, type: NotificationType) {
-        NotificationPushEvent(
-            userId = userId,
-            content = content,
-            redirectId = redirectId,
-            type = type
-        ).run { notificationEventPublisher.publishPushEvent(this) }
+            ).run {
+                notificationCreatePort.save(this)
+                notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
+            }
+        }
     }
 }

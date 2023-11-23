@@ -1,16 +1,15 @@
 package gloddy.notification
 
 enum class NotificationType(
-    val content: String,
-    val isNotificationRequired: Boolean
+    val content: String
 ) {
-    APPLY_APPROVE("지원하신 모임이 승인되었어요! 모임 고지를 확인해주세요", true),
-    APPLY_REFUSE("지원하신 모임이 거절되었어요. 다른 모임을 찾아볼까요?", false),
-    APPLY_CREATE("새로운 모임 지원서가 도착했어요!", true),
-    GROUP_LEAVE("님이 그룹에서 나갔어요", true),
-    GROUP_ARTICLE_CREATE("새로운 게시글을 확인해주세요", true),
-    GROUP_APPROACHING_START("1시간 뒤 모임이 시작돼요! 준비는 되었나요?", true),
-    GROUP_END("모임은 즐거우셨나요? 함께 했던 인원들을 평가해주세요!", false)
+    APPLY_APPROVE("Your applied gathering has been approved! \uD83D\uDC4C"),
+    APPLY_REFUSE("The gathering you applied for has been declined. \uD83E\uDD72"),
+    APPLY_CREATE("A new gathering application has arrived!  \uD83D\uDC8C"),
+    GROUP_LEAVE("has just left the group.  \uD83E\uDD72"),
+    GROUP_ARTICLE_CREATE("Please Check the New Notice! \uD83D\uDDE3"),
+    GROUP_APPROACHING_START("The gathering starts in 1 hour! ⏰"),
+    GROUP_END("Did you enjoy the gathering? \uD83D\uDE06")
     ;
 
     companion object {
@@ -20,9 +19,9 @@ enum class NotificationType(
         }
     }
 
-    fun getContent(name: String): String {
+    fun getContent(name: String = "member"): String {
         return when(this) {
-            in listOf(GROUP_LEAVE) -> "${name}${content}"
+            in listOf(GROUP_LEAVE) -> "${name} ${content}"
             else -> content
         }
     }

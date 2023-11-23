@@ -3,8 +3,8 @@ package gloddy.notification.service
 import gloddy.notification.*
 import gloddy.notification.NotificationType.APPLY_CREATE
 import gloddy.notification.dto.ApplyEvent
-import gloddy.notification.event.NotificationPushEvent
 import gloddy.notification.event.NotificationEventPublisher
+import gloddy.notification.event.toNotificationCreateEvent
 import gloddy.notification.port.`in`.ApplyNotificationCreateUseCase
 import gloddy.notification.port.out.NotificationCreatePort
 import org.springframework.stereotype.Service
@@ -23,18 +23,10 @@ class ApplyNotificationCreateService(
             userId =  getTargetUserId(type, applyEvent),
             content = type.content,
             type = type
-        ).run { notificationCreatePort.save(this) }
-
-        publishPushEvent(applyEvent.applyUserId, type.content, applyEvent.applyGroupId, type)
-    }
-
-    private fun publishPushEvent(userId: UserId, content: String, redirectId: Long, type: NotificationType) {
-        NotificationPushEvent(
-            userId = userId,
-            content = content,
-            redirectId = redirectId,
-            type = type
-        ).run { notificationEventPublisher.publishPushEvent(this) }
+        ).run {
+            notificationCreatePort.save(this)
+            notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
+        }
     }
 
     private fun getTargetUserId(type: NotificationType, applyEvent: ApplyEvent): UserId {
