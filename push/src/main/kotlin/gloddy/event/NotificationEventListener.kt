@@ -1,7 +1,8 @@
 package gloddy.event
 
 import gloddy.NotificationPushService
-import gloddy.notification.event.NotificationPushEvent
+import gloddy.command.toGroupingPushCommand
+import gloddy.notification.event.NotificationCreateEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 
@@ -11,7 +12,7 @@ class NotificationEventListener(
 ) {
 
     @EventListener
-    fun consume(event: NotificationPushEvent) {
-        notificationPushService.push(event)
+    fun consume(event: NotificationCreateEvent) {
+        notificationPushService.push(event.toGroupingPushCommand())
     }
 }
