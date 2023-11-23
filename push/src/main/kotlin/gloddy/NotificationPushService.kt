@@ -1,10 +1,10 @@
 package gloddy
 
+import gloddy.command.PushCommand
 import gloddy.dynamodb.fcmToken.FCMTokenQueryAdapter
 import gloddy.fcmToken.FirebaseToken
 import gloddy.notification.Notification
 import gloddy.notification.NotificationType
-import gloddy.notification.event.NotificationPushEvent
 import org.springframework.stereotype.Component
 
 @Component
@@ -13,36 +13,23 @@ class NotificationPushService(
     private val fcmTokenQueryAdapter: FCMTokenQueryAdapter
 ) {
     companion object {
-        const val NOTIFICATION_TITLE = "Gloddy"
+        const val PUSH_TITLE = "Gloddy"
     }
 
-    fun push(event: NotificationPushEvent) {
-        val notification = event.notification
+    fun push(pushCommand: PushCommand) {
+        val fcmToken = fcmTokenQueryAdapter.get(pushCommand.userId)
+        send(fcmToken.token, pushCommand)
+    }
 
-        if (isNotPushRequired(notification)) {
-            return
+    private fun send(fcmToken: FirebaseToken, pushCommand: PushCommand) {
+        when (pushCommand.isRequirePush) {
+            true -> PushData(
+                token = fcmToken.value,
+                title = PUSH_TITLE,
+                content = pushCommand.content,
+                payload = pushCommand.payload
+            ).run { pushClient.push(this) }
+            false -> return
         }
-
-        val fcmToken = fcmTokenQueryAdapter.get(notification.userId)
-        send(fcmToken.token, notification)
     }
-
-    private fun isNotPushRequired(notification: Notification): Boolean {
-        return !notification.type.isNotificationRequired
-    }
-
-    private fun send(token: FirebaseToken, notification: Notification) {
-        PushCommand(
-            token = token.value,
-            title = NOTIFICATION_TITLE,
-            content = notification.content,
-            payload = createPayload(notification.redirectId, notification.type)
-        ).run { pushClient.push(this) }
-    }
-
-    private fun createPayload(redirectId: Long, type: NotificationType) =
-        buildMap {
-            put("redirectId", redirectId.toString())
-            put("type", type.name)
-        }
 }

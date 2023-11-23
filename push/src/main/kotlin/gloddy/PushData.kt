@@ -1,6 +1,6 @@
 package gloddy
 
-data class PushCommand(
+data class PushData(
     val token: String,
     val title: String,
     val content: String,
