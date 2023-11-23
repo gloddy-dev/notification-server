@@ -3,8 +3,8 @@ package gloddy.notification.service
 import gloddy.notification.*
 import gloddy.notification.NotificationType.APPLY_CREATE
 import gloddy.notification.dto.ApplyEvent
-import gloddy.notification.event.NotificationPushEvent
 import gloddy.notification.event.NotificationEventPublisher
+import gloddy.notification.event.toNotificationCreateEvent
 import gloddy.notification.port.`in`.ApplyNotificationCreateUseCase
 import gloddy.notification.port.out.NotificationCreatePort
 import org.springframework.stereotype.Service
@@ -25,7 +25,7 @@ class ApplyNotificationCreateService(
             type = type
         ).run {
             notificationCreatePort.save(this)
-            notificationEventPublisher.publishPushEvent(NotificationPushEvent(this))
+            notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
         }
     }
 

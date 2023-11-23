@@ -8,7 +8,7 @@ class NotificationEventPublisher(
     private val applicationEventPublisher: ApplicationEventPublisher
 ) {
 
-    fun publishPushEvent(event: NotificationPushEvent) {
+    fun publishEvent(event: NotificationEvent) {
         applicationEventPublisher.publishEvent(event)
     }
 }

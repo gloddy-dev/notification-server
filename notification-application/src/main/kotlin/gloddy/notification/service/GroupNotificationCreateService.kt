@@ -4,8 +4,8 @@ import gloddy.notification.*
 import gloddy.notification.dto.GroupArticleEvent
 import gloddy.notification.dto.GroupEvent
 import gloddy.notification.dto.GroupStatusEvent
-import gloddy.notification.event.NotificationPushEvent
 import gloddy.notification.event.NotificationEventPublisher
+import gloddy.notification.event.toNotificationCreateEvent
 import gloddy.notification.port.`in`.GroupNotificationCreateUseCase
 import gloddy.notification.port.out.NotificationCreatePort
 import org.springframework.stereotype.Service
@@ -29,7 +29,7 @@ class GroupNotificationCreateService(
             type = notificationType
         ).run {
             notificationCreatePort.save(this)
-            notificationEventPublisher.publishPushEvent(NotificationPushEvent(this))
+            notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
         }
     }
 
@@ -44,7 +44,7 @@ class GroupNotificationCreateService(
                 type = notificationType
             ).run {
                 notificationCreatePort.save(this)
-                notificationEventPublisher.publishPushEvent(NotificationPushEvent(this))
+                notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
             }
         }
     }
@@ -55,12 +55,12 @@ class GroupNotificationCreateService(
         event.groupMemberUserIds.forEach {
             Notification(
                 userId = it,
-                redirectId = event.articleId,
+                redirectId = event.groupId,
                 content = notificationType.content,
                 type = notificationType
             ).run {
                 notificationCreatePort.save(this)
-                notificationEventPublisher.publishPushEvent(NotificationPushEvent(this))
+                notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
             }
         }
     }
