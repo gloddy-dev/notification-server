@@ -1,12 +1,10 @@
 package gloddy.notification.event
 
 import gloddy.notification.Notification
-import gloddy.notification.NotificationType
-import gloddy.notification.UserId
 
-class NotificationPushEvent(
+class NotificationCreateNotificationEvent(
     val notification: Notification
-)
+) : NotificationEvent
 
 //fun Notification.toEntity(): NotificationPushEvent =
 //    NotificationPushEvent(
