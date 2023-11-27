@@ -12,7 +12,7 @@ class NotificationEventListener(
     private val notificationPushService: NotificationPushService
 ) {
 
-    @Async
+    @Async("PUSH-EVENT-ASYNC-EXECUTOR")
     @EventListener
     fun consume(event: NotificationCreateEvent) {
         notificationPushService.push(event.toGroupingPushCommand())
