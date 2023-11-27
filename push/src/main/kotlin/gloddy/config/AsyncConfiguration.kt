@@ -12,15 +12,16 @@ import java.util.concurrent.Executor
 class AsyncConfiguration : AsyncConfigurer {
 
     companion object {
-        private const val THREAD_NAME_PREFIX = "ASYNC-THREAD-"
+        private const val PUSH_THREAD_NAME_PREFIX = "PUSH-ASYNC-THREAD-"
     }
 
     @Bean(name = ["PUSH-EVENT-ASYNC-EXECUTOR"])
     override fun getAsyncExecutor(): Executor {
         val executor = ThreadPoolTaskExecutor()
-        executor.setThreadNamePrefix(THREAD_NAME_PREFIX)
-        executor.corePoolSize = 9
+        executor.setThreadNamePrefix(PUSH_THREAD_NAME_PREFIX)
+        executor.corePoolSize = 2
         executor.maxPoolSize = 9
+        executor.queueCapacity = 5
         executor.initialize()
         return executor
     }
