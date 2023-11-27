@@ -3,8 +3,6 @@ package gloddy
 import gloddy.command.PushCommand
 import gloddy.dynamodb.fcmToken.FCMTokenQueryAdapter
 import gloddy.fcmToken.FirebaseToken
-import gloddy.notification.Notification
-import gloddy.notification.NotificationType
 import org.springframework.stereotype.Component
 
 @Component
@@ -12,9 +10,6 @@ class NotificationPushService(
     private val pushClient: PushClient,
     private val fcmTokenQueryAdapter: FCMTokenQueryAdapter
 ) {
-    companion object {
-        const val PUSH_TITLE = "Gloddy"
-    }
 
     fun push(pushCommand: PushCommand) {
         val fcmToken = fcmTokenQueryAdapter.get(pushCommand.userId)
