@@ -21,6 +21,9 @@ class NotificationEntity(
     @field:DynamoDBAttribute(attributeName = "redirect_id")
     var redirectId: String = "",
 
+    @field:DynamoDBAttribute(attributeName = "title")
+    var title: String = "",
+
     @field:DynamoDBAttribute(attributeName = "content")
     var content: String = "",
 
