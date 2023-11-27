@@ -21,6 +21,7 @@ class ApplyNotificationCreateService(
         Notification(
             redirectId = applyEvent.applyGroupId,
             userId =  getTargetUserId(type, applyEvent),
+            title = type.title,
             content = type.content,
             type = type
         ).run {

@@ -25,6 +25,7 @@ class GroupNotificationCreateService(
         Notification(
             redirectId = groupEvent.groupId,
             userId =  groupEvent.userId,
+            title = notificationType.title,
             content = notificationType.getContent(),
             type = notificationType
         ).run {
@@ -40,6 +41,7 @@ class GroupNotificationCreateService(
             Notification(
                 userId = it,
                 redirectId = event.groupId,
+                title = notificationType.title,
                 content = notificationType.content,
                 type = notificationType
             ).run {
@@ -56,6 +58,7 @@ class GroupNotificationCreateService(
             Notification(
                 userId = it,
                 redirectId = event.groupId,
+                title = notificationType.title,
                 content = notificationType.content,
                 type = notificationType
             ).run {
