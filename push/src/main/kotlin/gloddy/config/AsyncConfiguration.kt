@@ -19,9 +19,8 @@ class AsyncConfiguration : AsyncConfigurer {
     override fun getAsyncExecutor(): Executor {
         val executor = ThreadPoolTaskExecutor()
         executor.setThreadNamePrefix(PUSH_THREAD_NAME_PREFIX)
-        executor.corePoolSize = 2
+        executor.corePoolSize = 10
         executor.maxPoolSize = 10
-        executor.queueCapacity = 5
         executor.initialize()
         return executor
     }
