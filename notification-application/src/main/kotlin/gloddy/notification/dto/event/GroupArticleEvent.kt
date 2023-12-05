@@ -1,6 +1,6 @@
-package gloddy.notification.dto
+package gloddy.notification.dto.event
 
-import gloddy.notification.dto.eventType.GroupArticleEventType
+import gloddy.notification.dto.event.eventType.GroupArticleEventType
 import java.time.LocalDateTime
 
 data class GroupArticleEvent(

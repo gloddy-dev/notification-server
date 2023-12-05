@@ -1,4 +1,4 @@
-package gloddy.notification.dto.eventType
+package gloddy.notification.dto.event.eventType
 
 enum class GroupArticleEventType {
     GROUP_ARTICLE_CREATE

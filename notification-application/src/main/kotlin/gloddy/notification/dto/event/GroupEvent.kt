@@ -1,8 +1,6 @@
-package gloddy.notification.dto
+package gloddy.notification.dto.event
 
-import gloddy.notification.dto.eventType.GroupMemberEventType
-import gloddy.notification.UserId
-import gloddy.notification.dto.eventType.GroupEventType
+import gloddy.notification.dto.event.eventType.GroupEventType
 import java.time.LocalDateTime
 
 data class GroupEvent(
