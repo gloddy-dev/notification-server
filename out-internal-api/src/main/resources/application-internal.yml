@@ -1,1 +1,5 @@
+internal:
+  api:
+    base-url: ${INTERNAL_API_BASE_URL}
+
 
