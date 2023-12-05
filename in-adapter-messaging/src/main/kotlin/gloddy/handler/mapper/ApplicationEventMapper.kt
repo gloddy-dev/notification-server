@@ -1,42 +1,43 @@
 package gloddy.handler.mapper
 
-import gloddy.notification.ApplyEventType
-import gloddy.notification.GroupEventType
-import gloddy.notification.UserId
-import gloddy.notification.dto.*
+import gloddy.notification.dto.event.eventType.ApplyEventType
+import gloddy.notification.dto.event.eventType.GroupMemberEventType
+import gloddy.notification.dto.event.ApplyEvent
+import gloddy.notification.dto.event.GroupArticleEvent
+import gloddy.notification.dto.event.GroupEvent
+import gloddy.notification.dto.event.GroupMemberEvent
+import gloddy.notification.dto.event.eventType.GroupArticleEventType
+import gloddy.notification.dto.event.eventType.GroupEventType
 import gloddy.payload.apply.ApplyPayload
 import gloddy.payload.apply.ApplyPayloadType
 import gloddy.payload.group.*
 
 fun GroupArticlePayload.toDomainEvent(): GroupArticleEvent =
     GroupArticleEvent(
-        userId = UserId(this.userId),
-        groupId = this.groupId,
-        groupMemberUserIds = this.groupMemberUserIds.map { UserId(it) },
         articleId = this.articleId,
-        eventType = this.eventType.toDomainEventType()
+        eventType = this.eventType.toDomainEventType(),
+        eventDateTime = this.eventDateTime
     )
 
-fun GroupStatusPayload.toDomainEvent(): GroupStatusEvent =
-    GroupStatusEvent(
-        groupId = this.groupId,
-        groupMemberUserIds = this.groupMemberUserIds.map { UserId(it) },
-        eventType = this.eventType.toDomainEventType()
+fun GroupMemberPayload.toDomainEvent(): GroupMemberEvent =
+    GroupMemberEvent(
+        groupMemberId = this.groupMemberId,
+        eventType = this.eventType.toDomainEventType(),
+        eventDateTime = this.eventDateTime
     )
 
 fun ApplyPayload.toDomainEvent(): ApplyEvent =
     ApplyEvent(
-        userId = UserId(this.userId),
-        applyGroupId = this.applyGroupId,
-        applyUserId = UserId(this.applyUserId),
-        eventType = this.eventType.toDomainEventType()
+        applyId = this.applyId,
+        eventType = this.eventType.toDomainEventType(),
+        eventDateTime = this.eventDateTime
     )
 
-fun GroupMemberPayload.toDomainEvent(): GroupEvent =
+fun GroupPayload.toDomainEvent(): GroupEvent =
     GroupEvent(
-        userId = UserId(this.userId),
         groupId = this.groupId,
-        eventType = this.eventType.toDomainEventType()
+        eventType = this.eventType.toDomainEventType(),
+        eventDateTime = this.eventDateTime
     )
 private fun GroupArticlePayloadType.toDomainEventType(): GroupArticleEventType =
     when(this) {
@@ -44,10 +45,10 @@ private fun GroupArticlePayloadType.toDomainEventType(): GroupArticleEventType =
         GroupArticlePayloadType.CREATE_NOTICE_ARTICLE -> GroupArticleEventType.GROUP_ARTICLE_CREATE
     }
 
-private fun GroupStatusPayloadType.toDomainEventType(): GroupStatusEventType =
+private fun GroupPayloadType.toDomainEventType(): GroupEventType =
     when(this) {
-        GroupStatusPayloadType.APPROACHING_GROUP -> GroupStatusEventType.GROUP_APPROACHING_START
-        GroupStatusPayloadType.END_GROUP -> GroupStatusEventType.GROUP_END
+        GroupPayloadType.APPROACHING_GROUP -> GroupEventType.GROUP_APPROACHING_START
+        GroupPayloadType.END_GROUP -> GroupEventType.GROUP_END
     }
 
 private fun ApplyPayloadType.toDomainEventType(): ApplyEventType =
@@ -57,7 +58,7 @@ private fun ApplyPayloadType.toDomainEventType(): ApplyEventType =
         ApplyPayloadType.APPLY_REFUSE -> ApplyEventType.APPLY_REFUSE
     }
 
-private fun GroupMemberPayloadType.toDomainEventType(): GroupEventType =
+private fun GroupMemberPayloadType.toDomainEventType(): GroupMemberEventType =
     when(this) {
-        GroupMemberPayloadType.GROUP_MEMBER_LEAVE -> GroupEventType.GROUP_LEAVE
+        GroupMemberPayloadType.GROUP_MEMBER_LEAVE -> GroupMemberEventType.GROUP_LEAVE
     }
