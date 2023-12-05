@@ -1,7 +1,9 @@
 package gloddy.payload.group
 
-data class GroupStatusPayload(
+import java.time.LocalDateTime
+
+data class GroupPayload(
     val groupId: Long,
-    val groupMemberUserIds: List<Long>,
-    val eventType: GroupStatusPayloadType
+    val eventType: GroupPayloadType,
+    val eventDateTime: LocalDateTime
 )

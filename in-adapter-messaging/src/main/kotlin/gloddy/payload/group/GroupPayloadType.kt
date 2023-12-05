@@ -1,6 +1,6 @@
 package gloddy.payload.group
 
-enum class GroupStatusPayloadType {
+enum class GroupPayloadType {
     APPROACHING_GROUP,
     END_GROUP
 }
