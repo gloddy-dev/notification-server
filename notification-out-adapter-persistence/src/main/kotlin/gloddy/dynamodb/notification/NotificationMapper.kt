@@ -13,15 +13,17 @@ fun NotificationEntity.toDomain(): Notification =
         redirectId = RedirectId(this.redirectId.toLong()),
         title = this.title,
         content = this.content,
-        type = this.type!!
+        type = this.type!!,
+        image = this.image,
+        createdAt = this.createdAt
     )
 
 fun Notification.toEntity(): NotificationEntity =
     NotificationEntity(
-        id = this.id.value,
         userId = this.userId.value.toString(),
         redirectId = this.redirectId.value.toString(),
         title = this.title,
         content = this.content,
-        type = this.type
+        type = this.type,
+        image = this.image
     )

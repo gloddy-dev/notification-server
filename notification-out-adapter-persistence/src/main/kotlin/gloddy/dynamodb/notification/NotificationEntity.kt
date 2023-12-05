@@ -31,6 +31,9 @@ class NotificationEntity(
     @field:DynamoDBTypeConverted(converter = NotificationTypeConverter::class)
     var type: NotificationType? = null,
 
+    @field:DynamoDBAttribute(attributeName = "image")
+    var image: String = "",
+
     @field:DynamoDBAttribute(attributeName = "created_at")
     @field:DynamoDBTypeConverted(converter = LocalDateTimeConverter::class)
     @field:DynamoDBIndexRangeKey(globalSecondaryIndexName = "user_id-created_at-index")
