@@ -4,5 +4,5 @@ data class GroupMemberPayload (
     val groupId: Long,
     val captainId: Long,
     val groupMemberName: String,
-    val groupImage: Long
+    val groupImage: String
 )

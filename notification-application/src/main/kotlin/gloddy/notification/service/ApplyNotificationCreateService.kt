@@ -27,7 +27,8 @@ class ApplyNotificationCreateService(
             redirectId = RedirectId(payload.groupId),
             title = notificationType.title(null),
             content = notificationType.content,
-            type = notificationType
+            type = notificationType,
+            image = payload.groupImage
         ).run {
             notificationCreatePort.save(this)
             notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())

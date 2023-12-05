@@ -13,5 +13,4 @@ class NotificationGetService(
 
     override fun getAllByUser(dto: NotificationGetDto): List<Notification> =
         notificationGetPort.findByUserId(dto.userId)
-
 }

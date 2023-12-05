@@ -28,7 +28,8 @@ class GroupNotificationCreateService(
                 redirectId = RedirectId(payload.groupId),
                 title = notificationType.title(null),
                 content = notificationType.content,
-                type = notificationType
+                type = notificationType,
+                image = payload.groupImage
             ).run {
                 notificationCreatePort.save(this)
                 notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
@@ -45,7 +46,8 @@ class GroupNotificationCreateService(
             redirectId = RedirectId(payload.groupId),
             title = notificationType.title(payload.groupMemberName),
             content = notificationType.content,
-            type = notificationType
+            type = notificationType,
+            image = payload.groupImage
         ).run {
             notificationCreatePort.save(this)
             notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
@@ -63,7 +65,8 @@ class GroupNotificationCreateService(
                     redirectId = RedirectId(payload.groupId),
                     title = notificationType.title(null),
                     content = notificationType.content,
-                    type = notificationType
+                    type = notificationType,
+                    image = payload.groupImage
                 ).run {
                     notificationCreatePort.save(this)
                     notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
