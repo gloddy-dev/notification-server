@@ -1,5 +1,6 @@
 package gloddy.sqs.util
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import gloddy.payload.apply.ApplyPayload
 import gloddy.payload.group.GroupArticlePayload
@@ -9,7 +10,7 @@ import gloddy.payload.group.GroupPayload
 class MessageParser {
 
     companion object{
-        private val objectMapper = jacksonObjectMapper()
+        private val objectMapper = jacksonObjectMapper().registerModule(JavaTimeModule())
 
         fun parseApplyEvent(message: String): ApplyPayload {
             val payload = parsePayloadFromMessage(message)
