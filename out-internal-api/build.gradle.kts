@@ -9,6 +9,9 @@ jar.enabled = true
 extra["springCloudVersion"] = "2022.0.4"
 
 dependencies {
+	implementation(project(":notification-application"))
+	implementation(project(":notification-domain"))
+
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

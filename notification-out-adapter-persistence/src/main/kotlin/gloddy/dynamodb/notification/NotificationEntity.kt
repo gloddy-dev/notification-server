@@ -21,12 +21,18 @@ class NotificationEntity(
     @field:DynamoDBAttribute(attributeName = "redirect_id")
     var redirectId: String = "",
 
+    @field:DynamoDBAttribute(attributeName = "title")
+    var title: String = "",
+
     @field:DynamoDBAttribute(attributeName = "content")
     var content: String = "",
 
     @field:DynamoDBAttribute(attributeName = "type")
     @field:DynamoDBTypeConverted(converter = NotificationTypeConverter::class)
     var type: NotificationType? = null,
+
+    @field:DynamoDBAttribute(attributeName = "image")
+    var image: String = "",
 
     @field:DynamoDBAttribute(attributeName = "created_at")
     @field:DynamoDBTypeConverted(converter = LocalDateTimeConverter::class)

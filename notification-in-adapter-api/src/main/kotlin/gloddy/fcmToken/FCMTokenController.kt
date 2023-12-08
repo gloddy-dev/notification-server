@@ -2,6 +2,7 @@ package gloddy.fcmToken
 
 import gloddy.fcmToken.dto.FCMTokenCreateDto
 import gloddy.fcmToken.dto.FCMTokenCreateResponse
+import gloddy.fcmToken.dto.toResponse
 import gloddy.fcmToken.port.`in`.FCMTokenCreateUseCase
 import gloddy.notification.UserId
 import org.springframework.web.bind.annotation.*
@@ -16,6 +17,6 @@ class FCMTokenController(
         @RequestBody request: FCMTokenCreateDto,
         @RequestHeader("USER_ID") userId: UserId
     ): FCMTokenCreateResponse {
-        return fcmTokenCreateUseCase.create(userId, request)
+        return fcmTokenCreateUseCase.create(userId, request).toResponse()
     }
 }

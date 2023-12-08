@@ -1,9 +1,9 @@
 package gloddy.payload.group
 
+import java.time.LocalDateTime
+
 data class GroupArticlePayload(
-    val userId: Long,
-    val groupId: Long,
-    val groupMemberUserIds: List<Long>,
     val articleId: Long,
-    val eventType: GroupArticlePayloadType
+    val eventType: GroupArticlePayloadType,
+    val eventDateTime: LocalDateTime
 )

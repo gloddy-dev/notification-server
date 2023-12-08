@@ -1,4 +1,4 @@
-package gloddy.notification
+package gloddy.notification.dto.event.eventType
 
 enum class ApplyEventType {
     APPLY_APPROVE,

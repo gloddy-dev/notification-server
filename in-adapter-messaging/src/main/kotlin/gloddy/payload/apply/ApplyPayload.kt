@@ -1,8 +1,9 @@
 package gloddy.payload.apply
 
+import java.time.LocalDateTime
+
 data class ApplyPayload (
-    val userId: Long,
-    val applyGroupId: Long,
-    val applyUserId: Long,
-    val eventType: ApplyPayloadType
+    val applyId: Long,
+    val eventType: ApplyPayloadType,
+    val eventDateTime: LocalDateTime
 )

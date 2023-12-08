@@ -6,7 +6,7 @@ import gloddy.notification.port.`in`.GroupNotificationCreateUseCase
 import gloddy.payload.apply.ApplyPayload
 import gloddy.payload.group.GroupArticlePayload
 import gloddy.payload.group.GroupMemberPayload
-import gloddy.payload.group.GroupStatusPayload
+import gloddy.payload.group.GroupPayload
 import org.springframework.stereotype.Component
 
 @Component
@@ -29,7 +29,7 @@ class InPayloadHandler(
         groupNotificationCreateUseCase.create(groupArticleEvent)
     }
 
-    fun handleGroupStatusPayload(payload: GroupStatusPayload) {
+    fun handleGroupStatusPayload(payload: GroupPayload) {
         val groupStatusEvent = payload.toDomainEvent()
         groupNotificationCreateUseCase.create(groupStatusEvent)
     }

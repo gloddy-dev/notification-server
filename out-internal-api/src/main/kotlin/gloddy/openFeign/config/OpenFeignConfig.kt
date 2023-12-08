@@ -1,4 +1,4 @@
-package gloddy.openFeign
+package gloddy.openFeign.config
 
 import feign.Logger
 import org.springframework.cloud.openfeign.EnableFeignClients

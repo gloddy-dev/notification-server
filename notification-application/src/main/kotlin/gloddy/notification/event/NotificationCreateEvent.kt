@@ -2,6 +2,7 @@ package gloddy.notification.event
 
 import gloddy.notification.Notification
 import gloddy.notification.NotificationType
+import gloddy.notification.RedirectId
 import gloddy.notification.UserId
 
 fun Notification.toNotificationCreateEvent(): NotificationCreateEvent =
@@ -13,6 +14,6 @@ fun Notification.toNotificationCreateEvent(): NotificationCreateEvent =
 
 class NotificationCreateEvent(
     val userId: UserId,
-    val redirectId: Long,
+    val redirectId: RedirectId,
     val type: NotificationType
 ) : NotificationEvent

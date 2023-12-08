@@ -1,12 +1,13 @@
 package gloddy.notification.service
 
 import gloddy.notification.*
-import gloddy.notification.dto.GroupArticleEvent
-import gloddy.notification.dto.GroupEvent
-import gloddy.notification.dto.GroupStatusEvent
+import gloddy.notification.dto.event.GroupArticleEvent
+import gloddy.notification.dto.event.GroupEvent
+import gloddy.notification.dto.event.GroupMemberEvent
 import gloddy.notification.event.NotificationEventPublisher
 import gloddy.notification.event.toNotificationCreateEvent
 import gloddy.notification.port.`in`.GroupNotificationCreateUseCase
+import gloddy.notification.port.out.GroupPayloadGetPort
 import gloddy.notification.port.out.NotificationCreatePort
 import org.springframework.stereotype.Service
 
@@ -14,54 +15,62 @@ import org.springframework.stereotype.Service
 class GroupNotificationCreateService(
     private val notificationCreatePort: NotificationCreatePort,
     private val notificationEventPublisher: NotificationEventPublisher,
-//    private val groupPayloadGetPort: GroupPayloadGetPort,
+    private val groupPayloadGetPort: GroupPayloadGetPort,
 ): GroupNotificationCreateUseCase {
 
-    override fun create(groupEvent: GroupEvent) {
-//        val payload = groupPayloadGetPort.get(groupEvent.userId)
+    override fun create(event: GroupEvent) {
+        val payload = groupPayloadGetPort.getGroupPayload(event.groupId, event.eventType)
+        val notificationType = NotificationType.of(event.eventType.name)
 
-        val notificationType = NotificationType.of(groupEvent.eventType.name)
+        payload.groupMemberIds.value.forEach {
+            Notification(
+                userId = UserId(it),
+                redirectId = RedirectId(payload.groupId),
+                title = notificationType.title(null),
+                content = notificationType.content,
+                type = notificationType,
+                image = payload.groupImage
+            ).run {
+                notificationCreatePort.save(this)
+                notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
+            }
+        }
+    }
+
+    override fun create(event: GroupMemberEvent) {
+        val payload = groupPayloadGetPort.getGroupMemberPayload(event.groupMemberId, event.eventType)
+        val notificationType = NotificationType.of(event.eventType.name)
 
         Notification(
-            redirectId = groupEvent.groupId,
-            userId =  groupEvent.userId,
-            content = notificationType.getContent(),
-            type = notificationType
+            userId = UserId(payload.captainId),
+            redirectId = RedirectId(payload.groupId),
+            title = notificationType.title(payload.groupMemberName),
+            content = notificationType.content,
+            type = notificationType,
+            image = payload.groupImage
         ).run {
             notificationCreatePort.save(this)
             notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
         }
     }
 
-    override fun create(event: GroupStatusEvent) {
-        val notificationType = NotificationType.of(event.eventType.name)
-
-        event.groupMemberUserIds.forEach {
-            Notification(
-                userId = it,
-                redirectId = event.groupId,
-                content = notificationType.content,
-                type = notificationType
-            ).run {
-                notificationCreatePort.save(this)
-                notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
-            }
-        }
-    }
-
     override fun create(event: GroupArticleEvent) {
+        val payload = groupPayloadGetPort.getGroupArticlePayload(event.articleId, event.eventType)
         val notificationType = NotificationType.of(event.eventType.name)
 
-        event.groupMemberUserIds.forEach {
-            Notification(
-                userId = it,
-                redirectId = event.groupId,
-                content = notificationType.content,
-                type = notificationType
-            ).run {
-                notificationCreatePort.save(this)
-                notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
+        payload.groupMemberIds.value.filter { it != payload.writerId }
+            .forEach {
+                Notification(
+                    userId = UserId(it),
+                    redirectId = RedirectId(payload.groupId),
+                    title = notificationType.title(null),
+                    content = notificationType.content,
+                    type = notificationType,
+                    image = payload.groupImage
+                ).run {
+                    notificationCreatePort.save(this)
+                    notificationEventPublisher.publishEvent(this.toNotificationCreateEvent())
+                }
             }
-        }
     }
 }
