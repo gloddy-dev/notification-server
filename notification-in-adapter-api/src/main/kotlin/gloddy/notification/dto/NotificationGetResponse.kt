@@ -16,7 +16,7 @@ data class NotificationDto(
     val content: String,
     val type: NotificationType,
     val createdAt: String,
-    val groupImage: String
+    val image: String
 )
 
 fun List<Notification>.toResponse(): NotificationGetResponse =
@@ -32,5 +32,5 @@ fun Notification.toDto(): NotificationDto =
         content = this.content,
         type = this.type,
         createdAt = this.createdAt.toString(),
-        groupImage = this.image
+        image = this.image
     )
