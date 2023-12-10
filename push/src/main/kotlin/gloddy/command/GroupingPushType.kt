@@ -13,7 +13,7 @@ enum class GroupingPushType(
         "There are various other gatherings available for you! Would you like to look for another gathering?",
         false),
     APPLY_CREATE({ "A new gathering application has arrived! 💌" },
-        "We’re awaiting the host’s approval for the gathering! please warmly welcome the new members.",
+        "We’re awaiting the host’s approval for the gathering!",
         true),
     GROUP_LEAVE({ value: String? -> "$value has just left the group.  \uD83E\uDD72" },
         "Shall we go check the group participants?",

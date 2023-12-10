@@ -5,31 +5,31 @@ enum class NotificationType(
     val content: String
 ) {
     APPLY_APPROVE(
-        { "👌Your applied gathering has been approved!" },
+        { "👌 Your applied gathering has been approved!" },
         "Wishing you enjoy a fun and safe gathering."
     ),
     APPLY_REFUSE(
-        { "😢The gathering you applied for has been declined." },
+        { "😢 The gathering you applied for has been declined." },
         "There are various other gatherings available for you! Would you like to look for another gathering?"
     ),
     APPLY_CREATE(
         { "💌A new gathering application has arrived!" },
-        "We’re awaiting the host’s approval for the gathering! please warmly welcome the new members."
+        "We’re awaiting the host’s approval for the gathering!"
     ),
     GROUP_LEAVE(
-        { value: String? -> "😢$value has just left the group." },
+        { value: String? -> "😢 $value has just left the group." },
         "Shall we go check the group participants?"
     ),
     GROUP_ARTICLE_CREATE(
-        { "🗣️Please Check the New Notice!" },
+        { "🗣️ Please Check the New Notice!" },
         "A new post has been added."
     ),
     GROUP_APPROACHING_START(
-        { "⏰The gathering starts in 1 hour!" },
+        { "⏰ The gathering starts in 1 hour!" },
         "Are you ready to enjoy the gathering? \n" + "Check the announcement for a better gathering!"
     ),
     GROUP_END(
-        { "😆Did you enjoy the gathering?" },
+        { "😆 Did you enjoy the gathering?" },
         "Please rate the attendees of the gathering! \n" + "Select the best partner with reward stickers."
     )
     ;
