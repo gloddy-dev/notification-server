@@ -38,7 +38,7 @@ class GroupNotificationCreateService(
     }
 
     override fun create(event: GroupMemberEvent) {
-        val payload = groupPayloadGetPort.getGroupMemberPayload(event.groupMemberId, event.eventType)
+        val payload = groupPayloadGetPort.getGroupMemberPayload(event.userId.value,event.groupId, event.eventType)
         val notificationType = NotificationType.of(event.eventType.name)
 
         Notification(
