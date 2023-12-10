@@ -27,9 +27,10 @@ interface GroupPayloadGetClient : GroupPayloadGetPort {
         @RequestParam("eventType") eventType: GroupArticleEventType
     ): GroupArticlePayload
 
-    @GetMapping("/groups/members/{groupMemberId}")
+    @GetMapping("/groups/{groupId}/members/{userId}")
     override fun getGroupMemberPayload(
-        @PathVariable("groupMemberId") groupMemberId: Long,
+        @PathVariable("userId") userId: Long,
+        @PathVariable("groupId") groupId: Long,
         @RequestParam("eventType") eventType: GroupMemberEventType
     ): GroupMemberPayload
 }

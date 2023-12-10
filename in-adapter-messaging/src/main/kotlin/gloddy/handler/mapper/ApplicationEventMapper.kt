@@ -1,5 +1,6 @@
 package gloddy.handler.mapper
 
+import gloddy.notification.UserId
 import gloddy.notification.dto.event.eventType.ApplyEventType
 import gloddy.notification.dto.event.eventType.GroupMemberEventType
 import gloddy.notification.dto.event.ApplyEvent
@@ -21,7 +22,8 @@ fun GroupArticlePayload.toDomainEvent(): GroupArticleEvent =
 
 fun GroupMemberPayload.toDomainEvent(): GroupMemberEvent =
     GroupMemberEvent(
-        groupMemberId = this.groupMemberId,
+        userId = UserId(this.userId),
+        groupId = this.groupId,
         eventType = this.eventType.toDomainEventType(),
         eventDateTime = this.eventDateTime
     )
