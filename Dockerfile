@@ -1,22 +1,10 @@
-FROM openjdk:17.0-slim AS BUILDER
+FROM openjdk:17.0-slim
 
-RUN mkdir /app_source
-COPY . /app_source
-
-WORKDIR /app_source
-
-RUN chmod +x ./gradlew
-RUN ./gradlew :bootstrap:bootJar
-
-FROM openjdk:17.0-slim AS RUNNER
-
-RUN mkdir /app
-COPY --from=BUILDER /app_source/bootstrap/build/libs /app
-
-WORKDIR /app
+WORKDIR build
+COPY /bootstrap/build/libs/bootstrap-0.0.1-SNAPSHOT.jar app.jar
 
 ENV TZ=Asia/Seoul
 
 EXPOSE 8080
 
-ENTRYPOINT java -jar /app/*.jar
+ENTRYPOINT java -jar app.jar
