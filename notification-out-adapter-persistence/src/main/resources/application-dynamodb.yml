@@ -1,3 +1,5 @@
+stage: ${DYNAMODB_STAGE}
+
 amazon:
   dynamodb:
     endpoint: ${DYNAMODB_END_POINT}
